@@ -22,7 +22,8 @@
 .page_nav-list {
 	display: flex;
 	align-items: center;
-	justify-content: end;
+	justify-content: center;
+	margin-top: 20px;
 }
 
 .page_btn {

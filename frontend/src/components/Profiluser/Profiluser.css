@@ -81,3 +81,19 @@
 .profile-form:first-child {
 	border-bottom: 0.5px solid #ffd7d7;
 }
+
+.profileInfoDelete {
+	width: 50%;
+	margin: 10px auto 15px auto;
+	text-align: right;
+}
+
+.deleteWrapper {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.profileInfoDeleteText {
+	margin-right: 10px;
+}

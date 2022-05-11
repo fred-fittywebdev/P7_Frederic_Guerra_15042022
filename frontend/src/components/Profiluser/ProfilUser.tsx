@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { SyntheticEvent, useEffect, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Profiluser.css';
@@ -8,9 +9,11 @@ function ProfilUser() {
 	const [first_name, setFirstName] = useState('');
 	const [last_name, setlastName] = useState('');
 	const [username, setUserName] = useState('');
+	const [id, setProfileID] = useState(0);
 	const [profile_picture, setProfilePicture] = useState('');
 	const [password, setPassword] = useState('');
 	const [password_confirm, setPasswordConfirm] = useState('');
+	const [redirect, setRedirect] = useState(false);
 
 	useEffect(() => {
 		(async () => {
@@ -25,6 +28,7 @@ function ProfilUser() {
 			setlastName(data.last_name);
 			setUserName(data.username);
 			setProfilePicture(data.profile_picture);
+			setProfileID(data.id);
 		})();
 	}, []);
 
@@ -41,7 +45,9 @@ function ProfilUser() {
 			username,
 			profile_picture,
 		});
+
 		toast.success('Modifications enregistrées.');
+		console.log(id);
 	};
 	const passwordSubmit = async (e: SyntheticEvent) => {
 		e.preventDefault();
@@ -56,6 +62,27 @@ function ProfilUser() {
 		});
 		toast.success('Mot de passe modifié avec success.');
 	};
+
+	const del = async (id: number) => {
+		if (
+			window.confirm(
+				"Vous allez supprimer votre compte, cette action est irréversible ! Vous n'aurez plus accès au forum."
+			)
+		) {
+			await axios.delete(`users/${id}`, {
+				headers: {
+					Authorization:
+						'Bearer ' +
+						JSON.parse(localStorage.getItem('token') || ''),
+				},
+			});
+		}
+		setRedirect(true);
+	};
+
+	if (redirect) {
+		return <Redirect to="/" />;
+	}
 
 	return (
 		<div>
@@ -152,6 +179,16 @@ function ProfilUser() {
 						theme="colored"
 					/>
 				</form>
+			</div>
+			<div className="profileInfoDelete">
+				<div className="deleteWrapper">
+					<h3 className="profileInfoDeleteText">
+						Supprimer votre compte
+					</h3>
+					<button onClick={() => del(id)} className="btn">
+						Supprimer
+					</button>
+				</div>
 			</div>
 		</div>
 	);

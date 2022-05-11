@@ -93,6 +93,7 @@ function UserList() {
 							})}
 						</tbody>
 					</table>
+					<div className="action_wrapper"></div>
 					<Paginator
 						page={page}
 						lastPage={lastPage}
