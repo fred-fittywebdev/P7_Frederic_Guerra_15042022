@@ -1,0 +1,10 @@
+.info-success {
+	border: 0.5px solid green;
+	color: green;
+	padding: 10px;
+}
+
+.info-error {
+	border: 0.5px solid red;
+	color: red;
+}

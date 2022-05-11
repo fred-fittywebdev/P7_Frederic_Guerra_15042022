@@ -1,0 +1,37 @@
+.btn-menu {
+	background-color: var(--primary-color);
+	border: none;
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	margin: 0.5rem 0 0 0.5rem;
+	cursor: pointer;
+	position: relative;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.btn-menu::before,
+.btn-menu::after {
+	content: '';
+	background-color: #fff;
+	height: 2px;
+	width: 1rem;
+	position: absolute;
+}
+
+.btn-menu::before {
+	top: 1rem;
+}
+
+.btn-menu::after {
+	bottom: 1rem;
+}
+
+.wrapper_img,
+img {
+	width: 80px;
+	height: 80px;
+}

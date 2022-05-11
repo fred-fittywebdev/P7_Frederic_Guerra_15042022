@@ -1,0 +1,25 @@
+.sidebar {
+	flex: 3;
+	height: calc(100vh - 160px);
+}
+
+.sidebar_wrapper {
+	padding: 30px;
+	margin: 0 auto;
+	background-color: var(--bg-color);
+	width: fit-content;
+	border-radius: 8px;
+	color: var(--primary-color);
+	border: 0.5px solid var(--primary-color);
+	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
+}
+
+.list-items {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.list-icons {
+	margin-right: 15px;
+}

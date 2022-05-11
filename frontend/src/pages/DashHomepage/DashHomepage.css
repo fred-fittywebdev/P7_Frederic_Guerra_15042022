@@ -1,0 +1,9 @@
+.dash_homepage {
+	flex: 4;
+}
+
+.dash_widget {
+	display: flex;
+	margin: 20px;
+	margin-top: 50px;
+}

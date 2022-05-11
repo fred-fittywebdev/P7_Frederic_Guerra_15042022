@@ -1,0 +1,29 @@
+.ajout_membre_wrapper {
+	display: grid;
+	grid-template-columns: 400px 1fr;
+}
+
+@media (max-width: 990px) {
+	.ajout-membres-wrapper {
+		grid-template-columns: 200px 1fr;
+	}
+}
+
+@media (max-width: 590px) {
+	.ajout-membres-wrapper {
+		grid-template-columns: 1fr;
+	}
+}
+
+.ajout_membre_form {
+	margin: 30px auto;
+	border: 0.5px solid #ffd7d7;
+	width: 50%;
+	border-radius: 8px;
+	height: fit-content;
+}
+
+.profil_form {
+	margin: 30px auto;
+	width: 70%;
+}

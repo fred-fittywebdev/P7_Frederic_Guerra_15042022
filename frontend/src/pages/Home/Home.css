@@ -1,0 +1,16 @@
+.home_container {
+	display: grid;
+	grid-template-columns: 400px 1fr;
+}
+
+@media (max-width: 990px) {
+	.home_container {
+		grid-template-columns: 200px 1fr;
+	}
+}
+
+@media (max-width: 590px) {
+	.home_container {
+		grid-template-columns: 1fr;
+	}
+}
