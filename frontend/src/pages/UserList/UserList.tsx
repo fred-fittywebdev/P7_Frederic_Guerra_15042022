@@ -44,7 +44,7 @@ function UserList() {
 								<th>Nom</th>
 								<th>Pseudo</th>
 								<th>Email</th>
-								<th>Valide</th>
+								<th>Actif</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -63,27 +63,36 @@ function UserList() {
 										<td>{usersList.last_name}</td>
 										<td>{usersList.username}</td>
 										<td>{usersList.email}</td>
-										<td
-											style={
-												!usersList.is_valid
-													? {
-															backgroundColor:
-																'#fd2d01',
-															color: 'white',
-															textAlign: 'center',
-													  }
-													: {
-															backgroundColor:
-																'white',
-													  }
-											}
-										>
-											{usersList.is_valid.toString()}
-										</td>
+										{!usersList.is_valid && (
+											<td
+												style={
+													!usersList.is_valid
+														? {
+																textDecoration:
+																	'underline',
+																textUnderlineOffset:
+																	'2px',
+																color: '#fd2d01',
+																textAlign:
+																	'right',
+														  }
+														: {
+																backgroundColor:
+																	'white',
+														  }
+												}
+											>
+												Non
+											</td>
+										)}
+										{usersList.is_valid && <td>Oui</td>}
 										<td>
-											<button className="btn btn_user_list">
-												Bloquer
-											</button>
+											{usersList.is_valid && (
+												<button className="btn btn_user_list">
+													Bloquer
+												</button>
+											)}
+
 											<button className="btn">
 												Supprimer
 											</button>
