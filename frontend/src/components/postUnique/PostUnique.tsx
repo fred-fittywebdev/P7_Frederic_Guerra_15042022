@@ -183,11 +183,28 @@ const PostUnique = ({ post: p, deletPost }: IProps) => {
 					>
 						<div className="after_wrapper">
 							<h4 className="post_after_title">Post signalé</h4>
-							<p className="post_after_content">
+							<p
+								style={
+									user?.is_admin
+										? { display: 'none' }
+										: { display: 'block' }
+								}
+								className="post_after_content"
+							>
 								Le contenu de ce post est inaproprié, vous ne
 								pouvez donc pas le voir pour le moment.
 							</p>
-							<button className="btn post_after_btn">Voir</button>
+							<p
+								style={
+									user?.is_admin
+										? { display: 'block' }
+										: { display: 'none' }
+								}
+							>
+								Cliquez sur le post pour le supprimer ou le
+								modifier.
+							</p>
+							{/* <button className="btn post_after_btn">Voir</button> */}
 						</div>
 					</div>
 				)}
