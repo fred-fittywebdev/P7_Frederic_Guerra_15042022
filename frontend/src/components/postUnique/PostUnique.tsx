@@ -42,7 +42,7 @@ interface IProps {
 		image: string;
 		like: number;
 		posted_at: Date;
-		is_reported: boolean;
+		is_reported: number;
 		comments: Comment[];
 		user: User | null;
 	};
@@ -80,6 +80,7 @@ const PostUnique = ({ post: p, deletPost }: IProps) => {
 
 	// state pour la fonction signalement du post
 	const [isReported, setIsReported] = useState(false);
+	const [isDisplay, setIsDisplay] = useState('post_after');
 
 	//comment
 	const [content, setContent] = useState('');
@@ -145,6 +146,10 @@ const PostUnique = ({ post: p, deletPost }: IProps) => {
 		window.location.reload();
 	};
 
+	const readReported = (e: SyntheticEvent) => {
+		setIsDisplay('post_after_hidden');
+	};
+
 	useEffect(() => {
 		const token = JSON.parse(localStorage.getItem('token') || '');
 		const decoded: any = jwt_decode(token);
@@ -167,6 +172,25 @@ const PostUnique = ({ post: p, deletPost }: IProps) => {
 			}
 		>
 			<div className="post-wrapper">
+				{p.is_reported && (
+					<div
+						className={isDisplay}
+						onClick={
+							user?.is_admin
+								? () => setIsDisplay('post_after_hidden')
+								: undefined
+						}
+					>
+						<div className="after_wrapper">
+							<h4 className="post_after_title">Post signalé</h4>
+							<p className="post_after_content">
+								Le contenu de ce post est inaproprié, vous ne
+								pouvez donc pas le voir pour le moment.
+							</p>
+							<button className="btn post_after_btn">Voir</button>
+						</div>
+					</div>
+				)}
 				<div key={p.id} className="post_top">
 					<div className="post_top-left">
 						<StarRate

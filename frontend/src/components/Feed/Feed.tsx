@@ -17,7 +17,7 @@ interface IPosts {
 		image: string;
 		like: number;
 		posted_at: Date;
-		is_reported: boolean;
+		is_reported: number;
 		comments: Comment[];
 		user: User | null;
 	}[];

@@ -3,10 +3,7 @@
 	border-radius: 8px;
 	/* box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05); */
 	margin: 20px auto;
-}
-
-.post-wrapper {
-	padding: 10px;
+	position: relative;
 }
 
 .post_top {
