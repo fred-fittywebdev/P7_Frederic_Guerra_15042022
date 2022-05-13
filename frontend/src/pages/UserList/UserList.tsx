@@ -92,7 +92,11 @@ function UserList() {
 													Bloquer
 												</button>
 											)}
-
+											{!usersList.is_valid && (
+												<button className="btn btn_user_list">
+													Débloquer
+												</button>
+											)}
 											<button className="btn">
 												Supprimer
 											</button>
