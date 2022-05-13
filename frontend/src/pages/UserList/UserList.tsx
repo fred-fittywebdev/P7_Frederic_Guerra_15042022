@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './UserList.css';
 import Paginator from '../../components/Paginator/Paginator';
 import { Delete } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { User } from '../../Models/User';
 import PostCard from '../../components/PostShare/PostShare';
@@ -13,6 +13,47 @@ function UserList() {
 	const [usersList, setUsersList] = useState([]);
 	const [page, setPage] = useState(1);
 	const [lastPage, setLastPage] = useState(0);
+
+	// on bloque / débloque un utilisateur
+	const [unblock, setUnblock] = useState(false);
+	const [block, setBlock] = useState(false);
+	const [redirect, setRedirect] = useState(false);
+
+	const unblockuser = async (id: number) => {
+		if (
+			window.confirm(
+				"Vous allez débloquer l'accès du forum pour cet utilisateur."
+			)
+		) {
+			await axios.put(`users/${id}/validate`, {
+				headers: {
+					Authorization:
+						'Bearer ' +
+						JSON.parse(localStorage.getItem('token') || ''),
+				},
+			});
+		}
+
+		setUnblock(true);
+		setRedirect(true);
+	};
+
+	const blockuser = async (id: number) => {
+		if (
+			window.confirm('Cet utilisateur ne pourra plus accéder au forum.')
+		) {
+			await axios.put(`users/${id}/block`, {
+				headers: {
+					Authorization:
+						'Bearer ' +
+						JSON.parse(localStorage.getItem('token') || ''),
+				},
+			});
+		}
+
+		setUnblock(true);
+		setRedirect(true);
+	};
 
 	useEffect(() => {
 		(async () => {
@@ -25,9 +66,12 @@ function UserList() {
 			});
 			setUsersList(data.data);
 			setLastPage(data.meta.last_page);
-			console.log(data.data[0].role);
 		})();
 	}, [page]);
+
+	if (redirect) {
+		return <Redirect to="/home" />;
+	}
 
 	return (
 		<>
@@ -88,12 +132,24 @@ function UserList() {
 										{usersList.is_valid && <td>Oui</td>}
 										<td>
 											{usersList.is_valid && (
-												<button className="btn btn_user_list">
+												<button
+													onClick={() =>
+														blockuser(usersList.id)
+													}
+													className="btn btn_user_list"
+												>
 													Bloquer
 												</button>
 											)}
 											{!usersList.is_valid && (
-												<button className="btn btn_user_list">
+												<button
+													onClick={() =>
+														unblockuser(
+															usersList.id
+														)
+													}
+													className="btn btn_user_list"
+												>
 													Débloquer
 												</button>
 											)}
