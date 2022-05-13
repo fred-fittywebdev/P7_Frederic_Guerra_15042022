@@ -139,6 +139,34 @@ export const UpdateUser = async (req: Request, res: Response) => {
 	res.status(202).send(user);
 };
 
+// On bloque un utilisateur
+export const BlockUser = async (req: Request, res: Response) => {
+	const repository = getManager().getRepository(User);
+	const user = await repository.findOne(req.params.id);
+
+	await repository.update(req.params.id, {
+		is_valid: (user.is_valid = false),
+	});
+
+	return res.json({
+		message: 'Vous avez bloqué cet utilisateur',
+	});
+};
+
+// On débloque un utilisateur
+export const UnBlockUser = async (req: Request, res: Response) => {
+	const repository = getManager().getRepository(User);
+	const user = await repository.findOne(req.params.id);
+
+	await repository.update(req.params.id, {
+		is_valid: (user.is_valid = true),
+	});
+
+	return res.json({
+		message: 'Vous avez débloqué cet utilisateur',
+	});
+};
+
 // On supprime un utilisateur
 export const DeleteUser = async (req: Request, res: Response) => {
 	const repository = getManager().getRepository(User);

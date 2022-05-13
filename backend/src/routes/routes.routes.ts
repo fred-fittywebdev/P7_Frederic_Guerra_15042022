@@ -21,6 +21,8 @@ import {
 	UpdateUser,
 	DeleteUser,
 	ExportUser,
+	BlockUser,
+	UnBlockUser,
 } from './../controllers/user.controller';
 import { AuthMiddleware } from './../middleware/auth.middleware';
 import {
@@ -61,6 +63,8 @@ export const routes = (router: Router) => {
 	router.post('/api/users', AuthMiddleware, CreateUser);
 	router.get('/api/users/:id', AuthMiddleware, GetUser);
 	router.put('/api/users/:id', AuthMiddleware, UpdateUser);
+	router.put('/api/users/:id/block', AuthMiddleware, BlockUser);
+	router.put('/api/users/:id/validate', AuthMiddleware, UnBlockUser);
 	router.delete('/api/users/:id', AuthMiddleware, DeleteUser);
 
 	// Export csv des utilisateurs
