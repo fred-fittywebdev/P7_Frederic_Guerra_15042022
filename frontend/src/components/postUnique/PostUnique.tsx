@@ -5,6 +5,7 @@ import {
 	Edit,
 	Favorite,
 	MoreVert,
+	Restore,
 	StarRate,
 	ThumbDown,
 	ThumbDownOutlined,
@@ -133,6 +134,17 @@ const PostUnique = ({ post: p, deletPost }: IProps) => {
 		}
 	};
 
+	const authorizePost = async (id: number) => {
+		await axios.put(`post/${id}/authorize`, {
+			headers: {
+				Authorization:
+					'Bearer ' + JSON.parse(localStorage.getItem('token') || ''),
+			},
+		});
+		setIsReported(false);
+		toast.success('Le post est autorisé a nouveau');
+	};
+
 	const addComment = async (id: number) => {
 		await axios.post(`posts/${id}/comment`, {
 			headers: {
@@ -172,42 +184,47 @@ const PostUnique = ({ post: p, deletPost }: IProps) => {
 			}
 		>
 			<div className="post-wrapper">
-				{p.is_reported && (
-					<div
-						className={isDisplay}
-						onClick={
-							user?.is_admin
-								? () => setIsDisplay('post_after_hidden')
-								: undefined
-						}
-					>
-						<div className="after_wrapper">
-							<h4 className="post_after_title">Post signalé</h4>
-							<p
-								style={
-									user?.is_admin
-										? { display: 'none' }
-										: { display: 'block' }
-								}
-								className="post_after_content"
-							>
-								Le contenu de ce post est inaproprié, vous ne
-								pouvez donc pas le voir pour le moment.
-							</p>
-							<p
-								style={
-									user?.is_admin
-										? { display: 'block' }
-										: { display: 'none' }
-								}
-							>
-								Cliquez sur le post pour le supprimer ou le
-								modifier.
-							</p>
-							{/* <button className="btn post_after_btn">Voir</button> */}
-						</div>
+				{/* {p.is_reported && ( */}
+				<div
+					className={isDisplay}
+					style={
+						p.is_reported
+							? { display: 'grid' }
+							: { display: 'none' }
+					}
+					onClick={
+						user?.is_admin
+							? () => setIsDisplay('post_after_hidden')
+							: undefined
+					}
+				>
+					<div className="after_wrapper">
+						<h4 className="post_after_title">Post signalé</h4>
+						<p
+							style={
+								user?.is_admin
+									? { display: 'none' }
+									: { display: 'block' }
+							}
+							className="post_after_content"
+						>
+							Le contenu de ce post est inaproprié, vous ne pouvez
+							donc pas le voir pour le moment.
+						</p>
+						<p
+							style={
+								user?.is_admin
+									? { display: 'block' }
+									: { display: 'none' }
+							}
+						>
+							Cliquez sur le post pour le supprimer ou le
+							modifier.
+						</p>
+						{/* <button className="btn post_after_btn">Voir</button> */}
 					</div>
-				)}
+				</div>
+				{/* )} */}
 				<div key={p.id} className="post_top">
 					<div className="post_top-left">
 						<StarRate
@@ -274,7 +291,14 @@ const PostUnique = ({ post: p, deletPost }: IProps) => {
 					<span className="post-text">{p.content}</span>
 				</div>
 				<div className="post_bottom">
-					<div className="post_bottom_left">
+					<div
+						style={
+							p.is_reported
+								? { display: 'none' }
+								: { display: 'flex' }
+						}
+						className="post_bottom_left"
+					>
 						<ThumbUp
 							className="like_icon"
 							htmlColor="blue"
@@ -282,14 +306,43 @@ const PostUnique = ({ post: p, deletPost }: IProps) => {
 						/>
 						<span className="post_like_counter">{like} j'aime</span>
 					</div>
-					<div>
-						<div className="post_bottom_center">
+					<div
+						style={
+							user?.is_admin
+								? { display: 'none' }
+								: { display: 'flex' }
+						}
+					>
+						<div
+							className="post_bottom_center"
+							style={
+								p.is_reported
+									? { display: 'none' }
+									: { display: 'flex' }
+							}
+						>
 							<AddAlert
 								htmlColor="tomato"
 								className="warning_icon"
 								onClick={() => reportPost(p.id)}
 							/>
 							<span className="post_comment_text">Signaler</span>
+						</div>
+					</div>
+					<div
+						style={
+							p.is_reported
+								? { display: 'flex' }
+								: { display: 'none' }
+						}
+					>
+						<div className="post_bottom_center">
+							<Restore
+								htmlColor="green"
+								className="warning_icon"
+								onClick={() => authorizePost(p.id)}
+							/>
+							<span className="post_comment_text">Autoriser</span>
 						</div>
 					</div>
 					<div
