@@ -128,6 +128,21 @@ export const reportPost = async (req: Request, res: Response) => {
 		message: 'Vous avez signalé ce post',
 	});
 };
+
+// On autorise un post après signalement.
+export const AuthorizePost = async (req: Request, res: Response) => {
+	const repository = getManager().getRepository(Post);
+	const post = await repository.findOne(req.params.id);
+
+	await repository.update(req.params.id, {
+		is_reported: (post.is_reported = 0),
+	});
+
+	return res.json({
+		message: 'Vous avez autorisé ce post',
+	});
+};
+
 // On dislike un post
 export const DislikePost = async (req: Request, res: Response) => {
 	const repository = getManager().getRepository(Post);

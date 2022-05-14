@@ -1,5 +1,7 @@
+import { Post } from './../entity/post.entity';
 // import { PermissionMiddleware } from './../middleware/permission.middleware';
 import {
+	AuthorizePost,
 	DislikePost,
 	LikePost,
 	reportPost,
@@ -78,7 +80,10 @@ export const routes = (router: Router) => {
 	router.get('/api/post/:id', AuthMiddleware, GetPost);
 	router.put('/api/post/:id', AuthMiddleware, UpdatePost);
 	router.delete('/api/post/:id', AuthMiddleware, DeletePost);
+	// On signale un post
 	router.put('/api/post/:id/report', AuthMiddleware, reportPost);
+	// On autorise le Post
+	router.put('/api/post/:id/authorize', AuthMiddleware, AuthorizePost);
 	// On like un post
 	router.put('/api/post/:id/like', AuthMiddleware, LikePost);
 	// On dislike un post
