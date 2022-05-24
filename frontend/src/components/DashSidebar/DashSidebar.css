@@ -21,6 +21,7 @@
 
 .user_profile_picture {
 	width: 60px;
+	border-radius: 50%;
 }
 
 .dash_sidebar-wrapper {

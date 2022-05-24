@@ -2,6 +2,7 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Forgot from './components/Forgot/Forgot';
+import PostEdit from './pages/PostEdit/PostEdit';
 import Reset from './components/Reset/Reset';
 import { CurrentUserContextProvider } from './Context/UseCurrentUser';
 import { UserList } from './pages';
@@ -44,6 +45,9 @@ function App() {
 					</Route>
 					<Route exact path="/reset/:forgot_token">
 						<Reset />
+					</Route>
+					<Route exact path="/post/:id">
+						<PostEdit />
 					</Route>
 				</Switch>
 			</BrowserRouter>

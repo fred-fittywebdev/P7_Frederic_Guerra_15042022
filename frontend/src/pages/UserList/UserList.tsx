@@ -55,6 +55,39 @@ function UserList() {
 		setRedirect(true);
 	};
 
+	// On supprime un utilisateur
+	const deleteUser = async (id: number) => {
+		if (
+			window.confirm(
+				'Vous allez définitivement supprimé les infromations de cet utilisateur!?'
+			)
+		) {
+			await axios.delete(`users/${id}`, {
+				headers: {
+					Authorization:
+						'Bearer ' +
+						JSON.parse(localStorage.getItem('token') || ''),
+				},
+			});
+		}
+		setRedirect(true);
+	};
+
+	const dataExport = async () => {
+		const { data } = await axios.post(
+			'export',
+			{},
+			{ responseType: 'blob' }
+		);
+		const blob = new Blob([data, { type: 'text/csv' }]);
+		const url = window.URL.createObjectURL(data); // On crée une URL avec les data ( le fichier )
+		const link = document.createElement('a'); // ON crée un lien
+		// On attribue l'url crée avec le fichier et on simule le lien pour dwld
+		link.href = url;
+		link.download = 'users.csv';
+		link.click();
+	};
+
 	useEffect(() => {
 		(async () => {
 			const { data } = await axios.get(`users?page=${page}`, {
@@ -79,6 +112,13 @@ function UserList() {
 			<div className="user_list">
 				<DashSidebar />
 				<div className="table_wrapper">
+					<a
+						onClick={dataExport}
+						href="#"
+						className="btn user_list_export"
+					>
+						Exporter
+					</a>
 					<table>
 						<thead>
 							<tr>
@@ -153,7 +193,12 @@ function UserList() {
 													Débloquer
 												</button>
 											)}
-											<button className="btn">
+											<button
+												onClick={() =>
+													deleteUser(usersList.id)
+												}
+												className="btn"
+											>
 												Supprimer
 											</button>
 										</td>

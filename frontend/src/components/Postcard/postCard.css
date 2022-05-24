@@ -110,6 +110,10 @@
 	margin: 0 auto;
 }
 
+.hide_comment_section {
+	overflow: hidden;
+}
+
 .comment_section-content {
 	display: block;
 	font-size: 15px;

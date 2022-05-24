@@ -33,6 +33,7 @@ import moment from 'moment';
 import 'moment/locale/fr';
 
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 moment.locale();
 
 interface IProps {
@@ -275,7 +276,9 @@ const PostUnique = ({ post: p, deletPost }: IProps) => {
 							placement="right"
 							content={<span>Modifiez votre post</span>}
 						>
-							<Edit htmlColor="green" onClick={toggleModal} />
+							<Link to={`/post/${p.id}`}>
+								<Edit htmlColor="green" />
+							</Link>
 						</Tippy>
 					</div>
 				</div>

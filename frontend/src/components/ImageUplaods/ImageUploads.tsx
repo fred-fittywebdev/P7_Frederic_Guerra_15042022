@@ -17,7 +17,7 @@ const ImageUploads = (props: { uploaded: (url: string) => void }) => {
 		<div>
 			<label htmlFor="file" className="post-option">
 				<PermMedia htmlColor="tomato" className="post_icons" />
-				<span className="post_option-text">Photos</span>
+				<span className="post_option-text">Photo</span>
 				<input
 					style={{ display: 'none' }}
 					type="file"

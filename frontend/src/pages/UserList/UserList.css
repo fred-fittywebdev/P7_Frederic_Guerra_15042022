@@ -17,7 +17,7 @@
 
 table {
 	width: 80%;
-	margin: 0 auto 10px auto;
+	margin: 40px auto 10px auto;
 	text-align: right;
 	border-collapse: collapse;
 	border: 0.3px solid #ffd7d7;
@@ -50,4 +50,15 @@ tr {
 .btn_user_list:hover {
 	color: #fff;
 	background-color: #5db900;
+}
+
+.user_list_export {
+	margin: 20px;
+	color: var(--heading-color);
+	border: 1px solid var(--heading-color);
+}
+
+.user_list_export:hover {
+	color: #fff;
+	background-color: var(--heading-color);
 }

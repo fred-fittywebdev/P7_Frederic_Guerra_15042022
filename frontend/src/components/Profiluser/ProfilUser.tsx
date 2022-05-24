@@ -3,7 +3,10 @@ import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ImageUploads from '../ImageUplaods/ImageUploads';
 import './Profiluser.css';
+import jwt_decode from 'jwt-decode';
+import UserType from '../../Types/UserType';
 
 function ProfilUser() {
 	const [first_name, setFirstName] = useState('');
@@ -14,6 +17,8 @@ function ProfilUser() {
 	const [password, setPassword] = useState('');
 	const [password_confirm, setPasswordConfirm] = useState('');
 	const [redirect, setRedirect] = useState(false);
+	const [user, setUser] = useState<UserType>();
+	const [userPicture, setUserPicture] = useState('');
 
 	useEffect(() => {
 		(async () => {
@@ -29,6 +34,7 @@ function ProfilUser() {
 			setUserName(data.username);
 			setProfilePicture(data.profile_picture);
 			setProfileID(data.id);
+			setUserPicture(profile_picture);
 		})();
 	}, []);
 
@@ -79,6 +85,16 @@ function ProfilUser() {
 		}
 		setRedirect(true);
 	};
+
+	useEffect(() => {
+		const token = JSON.parse(localStorage.getItem('token') || '');
+		const decoded: any = jwt_decode(token);
+		if (user) {
+			setUser(decoded.user);
+			setUserPicture(decoded.user.profile_picture);
+			console.log(userPicture);
+		}
+	}, []);
 
 	if (redirect) {
 		return <Redirect to="/" />;
@@ -137,7 +153,7 @@ function ProfilUser() {
 					</label>
 					<label>
 						<span>Image de profil:</span>
-						<input type="file" />
+						<ImageUploads uploaded={setProfilePicture} />
 					</label>
 					<button className="btn">Envoyer</button>
 					<ToastContainer

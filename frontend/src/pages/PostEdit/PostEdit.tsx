@@ -2,10 +2,10 @@ import { Cancel, EmojiEmotions, Label, PermMedia } from '@material-ui/icons';
 import axios from 'axios';
 import React, { SyntheticEvent, useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import './PostShare.css';
+import './PostEdit.css';
 import jwt_decode from 'jwt-decode';
 import UserType from '../../Types/UserType';
-import ImageUploads from '../ImageUplaods/ImageUploads';
+import ImageUploads from '../../components/ImageUplaods/ImageUploads';
 
 interface IProps {
 	posts: {
@@ -40,10 +40,11 @@ interface User {
 	profile_picture: string;
 }
 
-function PostShare() {
+function PostEdit(props: any) {
 	const [content, setContent] = useState('');
 	const [redirect, setRedirect] = useState(false);
 	const [user, setUser] = useState<UserType>();
+	let id: number;
 
 	const [image, setImage] = useState('');
 
@@ -83,6 +84,11 @@ function PostShare() {
 		<div className="post_container">
 			<div className="post_wrapper">
 				<div className="post_top">
+					<img
+						src={user?.profile_picture}
+						alt="créateur du post"
+						className="post_profile_picture"
+					/>
 					<input
 						onChange={(e) => setContent(e.target.value)}
 						placeholder={`A quoi pensez-vous ${user?.first_name}?`}
@@ -154,4 +160,4 @@ function PostShare() {
 	);
 }
 
-export default PostShare;
+export default PostEdit;
